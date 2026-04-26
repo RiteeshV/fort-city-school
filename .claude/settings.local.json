@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.fortcityschool.com)",
+      "WebFetch(domain:fortcityschool.com)",
+      "Bash(python3 -c ':*)",
+      "Bash(ipconfig)",
+      "Bash(npm run:*)",
+      "Bash(node export-model.mjs)",
+      "Bash(node -e \"import\\('./export-model.mjs'\\).catch\\(e=>console.error\\(e\\)\\)\")",
+      "Bash(start http://localhost:5173)",
+      "Bash(curl -k \"http://www.fortcityschool.com/MANDATORY-PUBLIC-DISCLOSURE.aspx\" -L --max-time 30)",
+      "Bash(npx vite *)"
+    ]
+  }
+}
