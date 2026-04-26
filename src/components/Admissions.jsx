@@ -28,7 +28,15 @@ export default function Admissions() {
   const [submitted, setSubmitted] = useState(false)
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
-  const handleSubmit = (e) => { e.preventDefault(); setSubmitted(true) }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    await fetch('https://formspree.io/f/xeevdykb', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(formData),
+    })
+    setSubmitted(true)
+  }
 
   return (
     <section id="admissions" className="py-24 bg-[#F8FAFC]">

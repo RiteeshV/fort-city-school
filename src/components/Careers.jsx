@@ -76,8 +76,11 @@ export default function Careers() {
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
   const handleFile = (e) => setFormData({ ...formData, resume: e.target.files[0] })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    const data = new FormData()
+    Object.entries(formData).forEach(([k, v]) => { if (v) data.append(k, v) })
+    await fetch('https://formspree.io/f/mqewjrlw', { method: 'POST', body: data, headers: { Accept: 'application/json' } })
     setSubmitted(true)
     setShowConfetti(true)
     setTimeout(() => setShowConfetti(false), 2200)

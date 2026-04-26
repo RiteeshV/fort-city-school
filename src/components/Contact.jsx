@@ -38,7 +38,15 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
-  const handleSubmit = (e) => { e.preventDefault(); setSubmitted(true) }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    await fetch('https://formspree.io/f/mbdqbnky', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(formData),
+    })
+    setSubmitted(true)
+  }
 
   return (
     <section id="contact" className="bg-white">
