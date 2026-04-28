@@ -82,8 +82,7 @@ export default function Admissions() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.12 }}
                   whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                  onClick={s.step === '01' ? () => document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' }) : undefined}
-                  className={`relative rounded-2xl border ${c.light} overflow-hidden hover:shadow-xl transition-all duration-300 ${s.step === '01' ? 'cursor-pointer' : ''}`}
+                  className={`relative rounded-2xl border ${c.light} overflow-hidden hover:shadow-xl transition-all duration-300`}
                 >
                   {/* Top gradient bar */}
                   <div className={`h-1.5 w-full bg-gradient-to-r ${c.bg}`} />
