@@ -143,11 +143,38 @@ export default function Contact() {
         </div>
       </div>
 
+      {/* Map Header */}
+      <div className="bg-[#1E3A8A] px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+            <svg className="w-5 h-5 text-[#F59E0B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-white font-bold text-sm">Find Us on the Map</p>
+            <p className="text-white/60 text-xs mt-0.5">100ft Ring Road, Near Varun Motors, Opp. Komati Cheruvu, Ammavari Yavapuram Village, Vizianagaram – 535002</p>
+          </div>
+        </div>
+        <a
+          href="https://www.google.com/maps/dir/?api=1&destination=Fort+City+School,+100ft+Ring+Road,+Near+Varun+Motors,+Opp+Komati+Cheruvu,+Ammavari+Yavapuram+Village,+Vizianagaram,+Andhra+Pradesh+535002"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#F59E0B] text-[#1E293B] rounded-xl text-sm font-bold hover:bg-yellow-400 transition-colors shrink-0"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+          </svg>
+          Get Directions
+        </a>
+      </div>
+
       {/* Google Maps */}
       <div className="w-full h-72 md:h-96">
         <iframe
           title="Fort City School Location"
-          src="https://maps.google.com/maps?q=Fort+City+CBSE+School,+Ring+Road,+Near+Varun+Motors,+Opp+Komati+Cheruvu,+Jammu+Narayanapuram,+Vizianagaram,+Andhra+Pradesh+535002&output=embed&z=17"
+          src="https://maps.google.com/maps?q=Fort+City+School,+100ft+Ring+Road,+Near+Varun+Motors,+Opp+Komati+Cheruvu,+Ammavari+Yavapuram+Village,+Vizianagaram+Mandal,+Andhra+Pradesh+535002&output=embed&z=17"
           width="100%" height="100%" style={{ border: 0, display: 'block' }}
           allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"
         />
