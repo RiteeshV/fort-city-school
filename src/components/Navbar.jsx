@@ -32,6 +32,7 @@ const navGroups = [
       { label: 'TC Issues', href: '#tc-issues', icon: '📄' },
       { label: 'Mandatory Disclosure', href: '#mandatory-disclosure', icon: '📋' },
       { label: 'School Calendar', href: '#school-calendar', icon: '📅' },
+      { label: 'Location', href: '#contact', icon: '📍' },
     ],
   },
   { label: 'Contact', href: '#contact', children: null },
