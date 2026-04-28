@@ -261,10 +261,28 @@ export default function MandatoryDisclosure() {
 
               <div className="mt-8">
                 <SectionHeader label="Result — Class X" />
-                <Table
-                  headers={['Sl.No.', 'Year', 'No. of Registered Students', 'No. of Students Passed', 'Pass Percentage']}
-                  rows={resultClassX}
-                />
+                <div className="overflow-x-auto rounded-2xl border border-gray-100 shadow-sm">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-navy-800 text-white">
+                        {['Sl.No.', 'Year', 'No. of Registered Students', 'No. of Students Passed', 'Pass Percentage'].map((h) => (
+                          <th key={h} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider first:rounded-tl-2xl last:rounded-tr-2xl">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {resultClassX.map((row, i) => (
+                        <tr key={i} className={i % 2 === 0 ? 'bg-white hover:bg-gray-50' : 'bg-[#F8F8F5] hover:bg-gray-100'}>
+                          <td className="px-4 py-3 text-navy-800/70 border-b border-gray-100">{row.sl}</td>
+                          <td className="px-4 py-3 text-navy-800/70 border-b border-gray-100">{row.year}</td>
+                          <td className="px-4 py-3 text-navy-800/70 border-b border-gray-100">{row.registered}</td>
+                          <td className="px-4 py-3 text-navy-800/70 border-b border-gray-100">{row.passed}</td>
+                          <td className="px-4 py-3 text-navy-800/70 border-b border-gray-100 font-semibold text-emerald-600">{row.percentage}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </>
           )}
