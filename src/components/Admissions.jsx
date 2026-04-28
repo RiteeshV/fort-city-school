@@ -135,69 +135,36 @@ export default function Admissions() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="lg:col-span-3 bg-white rounded-3xl shadow-lg p-5 sm:p-10 border border-[#E2E8F0]"
+            className="lg:col-span-3 bg-white rounded-3xl shadow-lg p-5 sm:p-10 border border-[#E2E8F0] flex flex-col justify-between"
           >
-            {submitted ? (
-              <div className="flex flex-col items-center justify-center h-full py-12 text-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-[#1E3A8A]/10 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-[#1E3A8A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-extrabold text-[#1E293B]">Enquiry Received!</h3>
-                <p className="text-[#475569] max-w-sm">
-                  Thank you for your interest in Fort City School. Our admissions team will contact you within 24 hours.
-                </p>
-                <button onClick={() => setSubmitted(false)} className="mt-4 px-6 py-2.5 bg-[#1E3A8A] text-white rounded-xl text-sm font-bold hover:bg-[#F59E0B] transition-colors">
-                  Submit Another
-                </button>
+            <div>
+              <p className="text-[#F59E0B] text-xs font-bold uppercase tracking-[0.15em] mb-2">Get Started</p>
+              <h3 id="enquiry-form" className="text-2xl font-extrabold text-[#1E293B] mb-3">Admission Enquiry Form</h3>
+              <p className="text-[#475569] text-sm leading-relaxed mb-8">Fill in our Google Form — it takes less than 2 minutes. Your response is saved instantly and our admissions team will contact you within 24 hours.</p>
+              <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                {[
+                  { icon: '👤', label: 'Student Name' },
+                  { icon: '🎓', label: 'Grade Applying For' },
+                  { icon: '📞', label: 'Phone Number' },
+                  { icon: '📧', label: 'Email Address' },
+                  { icon: '💬', label: 'Message' },
+                ].map((f) => (
+                  <div key={f.label} className="flex items-center gap-3 bg-[#F8FAFC] rounded-xl px-4 py-3 border border-[#E2E8F0]">
+                    <span className="text-xl">{f.icon}</span>
+                    <span className="text-sm font-semibold text-[#475569]">{f.label}</span>
+                  </div>
+                ))}
               </div>
-            ) : (
-              <>
-                <p className="text-[#F59E0B] text-xs font-bold uppercase tracking-[0.15em] mb-2">Get Started</p>
-                <h3 id="enquiry-form" className="text-2xl font-extrabold text-[#1E293B] mb-6">Admission Enquiry Form</h3>
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-1.5">Student Name *</label>
-                      <input type="text" name="name" required value={formData.name} onChange={handleChange} placeholder="Full name"
-                        className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/15 outline-none text-sm text-[#1E293B] transition-all bg-white" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-1.5">Grade Applying For *</label>
-                      <select name="grade" required value={formData.grade} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/15 outline-none text-sm text-[#1E293B] transition-all bg-white">
-                        <option value="">Select grade</option>
-                        <option>Nursery</option>
-                        <option>LKG / UKG</option>
-                        {Array.from({ length: 12 }, (_, i) => <option key={i + 1}>Class {i + 1}</option>)}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-1.5">Phone Number *</label>
-                      <input type="tel" name="phone" required value={formData.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX"
-                        className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/15 outline-none text-sm text-[#1E293B] transition-all bg-white" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-1.5">Email Address</label>
-                      <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="parent@email.com"
-                        className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/15 outline-none text-sm text-[#1E293B] transition-all bg-white" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-1.5">Message (Optional)</label>
-                    <textarea name="message" rows={3} value={formData.message} onChange={handleChange} placeholder="Any questions or specific requirements..."
-                      className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/15 outline-none text-sm text-[#1E293B] transition-all resize-none bg-white" />
-                  </div>
-                  <button type="submit"
-                    className="w-full py-3.5 bg-[#1E3A8A] text-white rounded-xl font-bold text-sm hover:bg-[#F59E0B] transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5">
-                    Submit Enquiry →
-                  </button>
-                </form>
-              </>
-            )}
+            </div>
+            <a
+              href="https://forms.gle/yqaNeDMQUcmHNHh16"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-4 bg-[#1E3A8A] text-white rounded-xl font-bold text-sm hover:bg-[#F59E0B] transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5"
+            >
+              📋 Open Admission Enquiry Form →
+            </a>
+            <p className="text-center text-xs text-[#94A3B8] mt-3">Opens in a new tab · Powered by Google Forms</p>
           </motion.div>
 
           {/* Info */}

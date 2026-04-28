@@ -115,54 +115,30 @@ export default function Contact() {
           >
             <p className="text-[#F59E0B] text-xs font-bold uppercase tracking-[0.15em] mb-6">Send Us a Message</p>
 
-            {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center py-10 text-center gap-4"
-              >
-                <div className="w-14 h-14 rounded-full bg-[#1E3A8A]/10 flex items-center justify-center">
-                  <svg className="w-7 h-7 text-[#1E3A8A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                  </svg>
+            <p className="text-[#475569] text-sm leading-relaxed mb-6">Send us a message using our Google Form — we'll get back to you shortly.</p>
+            <div className="grid sm:grid-cols-2 gap-3 mb-6">
+              {[
+                { icon: '👤', label: 'Your Name' },
+                { icon: '📞', label: 'Phone No' },
+                { icon: '📧', label: 'Email Id' },
+                { icon: '📌', label: 'Subject' },
+                { icon: '💬', label: 'Message' },
+              ].map((f) => (
+                <div key={f.label} className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-[#E2E8F0]">
+                  <span className="text-lg">{f.icon}</span>
+                  <span className="text-sm font-semibold text-[#475569]">{f.label}</span>
                 </div>
-                <h4 className="font-extrabold text-[#1E293B] text-xl">Message Sent!</h4>
-                <p className="text-[#475569] text-sm max-w-sm">Thank you for reaching out. We will get back to you shortly.</p>
-                <button
-                  onClick={() => { setSubmitted(false); setFormData({ name: '', phone: '', email: '', subject: '', message: '' }) }}
-                  className="mt-2 px-6 py-2.5 bg-[#1E3A8A] text-white rounded-xl text-sm font-bold hover:bg-[#F59E0B] transition-colors"
-                >
-                  Send Another
-                </button>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid sm:grid-cols-3 gap-4">
-                  {[
-                    { type: 'text', name: 'name', required: true, placeholder: 'Your Name' },
-                    { type: 'tel', name: 'phone', required: false, placeholder: 'Phone No.' },
-                    { type: 'email', name: 'email', required: true, placeholder: 'Your Email Id' },
-                  ].map(field => (
-                    <input
-                      key={field.name}
-                      type={field.type} name={field.name} required={field.required}
-                      value={formData[field.name]} onChange={handleChange} placeholder={field.placeholder}
-                      className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-white focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/15 outline-none text-sm text-[#1E293B] transition-all"
-                    />
-                  ))}
-                </div>
-                <input type="text" name="subject" required value={formData.subject} onChange={handleChange} placeholder="Enter Subject"
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-white focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/15 outline-none text-sm text-[#1E293B] transition-all" />
-                <textarea name="message" required rows={4} value={formData.message} onChange={handleChange} placeholder="Enter Message"
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-white focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/15 outline-none text-sm text-[#1E293B] transition-all resize-none" />
-                <div className="flex justify-center">
-                  <button type="submit"
-                    className="px-12 py-3 bg-[#1E3A8A] text-white rounded-xl font-bold text-sm hover:bg-[#F59E0B] transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5">
-                    Submit
-                  </button>
-                </div>
-              </form>
-            )}
+              ))}
+            </div>
+            <a
+              href="https://forms.gle/f5WNNLHmK18CkqVMA"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#1E3A8A] text-white rounded-xl font-bold text-sm hover:bg-[#F59E0B] transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+            >
+              ✉️ Open Contact Form →
+            </a>
+            <p className="text-center text-xs text-[#94A3B8] mt-3">Opens in a new tab · Powered by Google Forms</p>
           </motion.div>
         </div>
       </div>

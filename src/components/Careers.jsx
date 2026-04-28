@@ -281,78 +281,34 @@ export default function Careers() {
                         </button>
                       </div>
 
-                      <form onSubmit={handleSubmit} className="space-y-5">
-                        {/* Title */}
-                        <div>
-                          <label className="block text-xs font-semibold text-navy-800/50 uppercase tracking-wider mb-2">Title</label>
-                          <div className="flex gap-5">
-                            {['Mr', 'Mrs', 'Miss'].map((t) => (
-                              <label key={t} className="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="title" value={t} checked={formData.title === t} onChange={handleChange} className="accent-gold-500" />
-                                <span className="text-sm text-navy-800/70">{t}</span>
-                              </label>
-                            ))}
-                          </div>
-                        </div>
+                      <p className="text-navy-800/60 text-sm leading-relaxed mb-6">Fill in our Google Form to apply. Your application is saved instantly and our team will review it shortly.</p>
 
-                        <div className="grid sm:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-xs font-semibold text-navy-800/50 uppercase tracking-wider mb-1.5">Name *</label>
-                            <input type="text" name="name" required value={formData.name} onChange={handleChange} placeholder="Full name"
-                              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm text-navy-800 transition-all" />
+                      <div className="grid grid-cols-2 gap-3 mb-6">
+                        {[
+                          { icon: '👤', label: 'Full Name' },
+                          { icon: '📧', label: 'Email' },
+                          { icon: '📱', label: 'Mobile No' },
+                          { icon: '🎓', label: 'Qualification' },
+                          { icon: '💼', label: 'Field Applying For' },
+                          { icon: '⏳', label: 'Work Experience' },
+                          { icon: '✍️', label: 'Why Hire You' },
+                        ].map((f) => (
+                          <div key={f.label} className="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100">
+                            <span className="text-base">{f.icon}</span>
+                            <span className="text-xs font-semibold text-navy-800/70">{f.label}</span>
                           </div>
-                          <div>
-                            <label className="block text-xs font-semibold text-navy-800/50 uppercase tracking-wider mb-1.5">Email *</label>
-                            <input type="email" name="email" required value={formData.email} onChange={handleChange} placeholder="your@email.com"
-                              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm text-navy-800 transition-all" />
-                          </div>
-                        </div>
+                        ))}
+                      </div>
 
-                        <div className="grid sm:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-xs font-semibold text-navy-800/50 uppercase tracking-wider mb-1.5">Mobile No *</label>
-                            <input type="tel" name="mobile" required value={formData.mobile} onChange={handleChange} placeholder="+91 XXXXX XXXXX"
-                              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm text-navy-800 transition-all" />
-                          </div>
-                          <div>
-                            <label className="block text-xs font-semibold text-navy-800/50 uppercase tracking-wider mb-1.5">Education Qualification *</label>
-                            <input type="text" name="qualification" required value={formData.qualification} onChange={handleChange} placeholder="e.g. B.Ed, M.Sc"
-                              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm text-navy-800 transition-all" />
-                          </div>
-                        </div>
-
-                        <div className="grid sm:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-xs font-semibold text-navy-800/50 uppercase tracking-wider mb-1.5">Field Applying For *</label>
-                            <input type="text" name="field" required value={formData.field} onChange={handleChange} placeholder="e.g. Mathematics Teacher"
-                              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm text-navy-800 transition-all" />
-                          </div>
-                          <div>
-                            <label className="block text-xs font-semibold text-navy-800/50 uppercase tracking-wider mb-1.5">Work Experience</label>
-                            <input type="text" name="experience" value={formData.experience} onChange={handleChange} placeholder="e.g. 3 years"
-                              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm text-navy-800 transition-all" />
-                          </div>
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-semibold text-navy-800/50 uppercase tracking-wider mb-1.5">Why We Have to Hire You? *</label>
-                          <textarea name="whyHire" required rows={3} value={formData.whyHire} onChange={handleChange}
-                            placeholder="Tell us what makes you the right fit..."
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm text-navy-800 transition-all resize-none" />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-semibold text-navy-800/50 uppercase tracking-wider mb-1.5">Upload Your Resume</label>
-                          <input type="file" name="resume" accept=".pdf,.doc,.docx" onChange={handleFile}
-                            className="w-full text-sm text-navy-800/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-navy-800 file:text-white file:text-xs file:font-semibold hover:file:bg-navy-700 file:cursor-pointer" />
-                          <p className="text-xs text-navy-800/30 mt-1">PDF, DOC or DOCX</p>
-                        </div>
-
-                        <button type="submit"
-                          className="w-full py-3.5 bg-navy-800 text-white rounded-xl font-bold text-sm hover:bg-navy-700 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5">
-                          Submit Application →
-                        </button>
-                      </form>
+                      <a
+                        href="https://forms.gle/iLizyYvhqfMUNPyf7"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 w-full py-3.5 bg-navy-800 text-white rounded-xl font-bold text-sm hover:bg-gold-500 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5"
+                      >
+                        📋 Open Application Form →
+                      </a>
+                      <p className="text-center text-xs text-navy-800/30 mt-3">Opens in a new tab · Powered by Google Forms</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
