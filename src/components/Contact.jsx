@@ -40,10 +40,10 @@ export default function Contact() {
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await fetch('https://formspree.io/f/mbdqbnky', {
+    await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({ access_key: 'ab8510b1-90b8-4ef0-a8b1-3569785c825f', ...formData }),
     })
     setSubmitted(true)
   }

@@ -78,9 +78,11 @@ export default function Careers() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const data = new FormData()
-    Object.entries(formData).forEach(([k, v]) => { if (v) data.append(k, v) })
-    await fetch('https://formspree.io/f/mqewjrlw', { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+    await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ access_key: 'c177abd5-7d1d-45b3-aed1-78908163ce58', ...formData }),
+    })
     setSubmitted(true)
     setShowConfetti(true)
     setTimeout(() => setShowConfetti(false), 2200)

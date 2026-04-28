@@ -30,10 +30,10 @@ export default function Admissions() {
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await fetch('https://formspree.io/f/xeevdykb', {
+    await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({ access_key: '74515972-dc29-44f9-8c1a-db992db78467', ...formData }),
     })
     setSubmitted(true)
   }
