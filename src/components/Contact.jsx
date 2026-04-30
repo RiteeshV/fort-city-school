@@ -36,15 +36,18 @@ const infoCards = [
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ access_key: 'ab8510b1-90b8-4ef0-a8b1-3569785c825f', ...formData }),
+      body: JSON.stringify({ access_key: 'ab8510b1-90b8-4ef0-a8b1-3569785c825f', subject: 'New Contact Message — Fort City School', ...formData }),
     })
+    setLoading(false)
     setSubmitted(true)
   }
 
@@ -115,30 +118,52 @@ export default function Contact() {
           >
             <p className="text-[#F59E0B] text-xs font-bold uppercase tracking-[0.15em] mb-6">Send Us a Message</p>
 
-            <p className="text-[#475569] text-sm leading-relaxed mb-6">Send us a message using our Google Form — we'll get back to you shortly.</p>
-            <div className="grid sm:grid-cols-2 gap-3 mb-6">
-              {[
-                { icon: '👤', label: 'Your Name' },
-                { icon: '📞', label: 'Phone No' },
-                { icon: '📧', label: 'Email Id' },
-                { icon: '📌', label: 'Subject' },
-                { icon: '💬', label: 'Message' },
-              ].map((f) => (
-                <div key={f.label} className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-[#E2E8F0]">
-                  <span className="text-lg">{f.icon}</span>
-                  <span className="text-sm font-semibold text-[#475569]">{f.label}</span>
+            {submitted ? (
+              <div className="flex flex-col items-center justify-center py-10 gap-3 text-center">
+                <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-3xl">✅</div>
+                <h4 className="text-lg font-extrabold text-[#1E293B]">Message Sent!</h4>
+                <p className="text-[#475569] text-sm max-w-xs">Thank you for reaching out. We'll get back to you shortly.</p>
+                <button onClick={() => { setSubmitted(false); setFormData({ name: '', phone: '', email: '', subject: '', message: '' }) }}
+                  className="mt-2 px-5 py-2 bg-[#1E3A8A] text-white rounded-xl text-sm font-bold hover:bg-[#F59E0B] transition-colors">
+                  Send Another
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-bold text-[#475569] uppercase tracking-wide">Your Name *</label>
+                    <input required name="name" value={formData.name} onChange={handleChange} placeholder="Full name"
+                      className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-white text-sm text-[#1E293B] focus:outline-none focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/10 transition" />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-bold text-[#475569] uppercase tracking-wide">Phone No</label>
+                    <input name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" type="tel"
+                      className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-white text-sm text-[#1E293B] focus:outline-none focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/10 transition" />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-bold text-[#475569] uppercase tracking-wide">Email Id</label>
+                    <input name="email" value={formData.email} onChange={handleChange} placeholder="your@email.com" type="email"
+                      className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-white text-sm text-[#1E293B] focus:outline-none focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/10 transition" />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-bold text-[#475569] uppercase tracking-wide">Subject *</label>
+                    <input required name="subject" value={formData.subject} onChange={handleChange} placeholder="How can we help?"
+                      className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-white text-sm text-[#1E293B] focus:outline-none focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/10 transition" />
+                  </div>
                 </div>
-              ))}
-            </div>
-            <a
-              href="https://forms.gle/f5WNNLHmK18CkqVMA"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#1E3A8A] text-white rounded-xl font-bold text-sm hover:bg-[#F59E0B] transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
-            >
-              ✉️ Open Contact Form →
-            </a>
-            <p className="text-center text-xs text-[#94A3B8] mt-3">Opens in a new tab · Powered by Google Forms</p>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-bold text-[#475569] uppercase tracking-wide">Message *</label>
+                  <textarea required name="message" value={formData.message} onChange={handleChange} placeholder="Your message..." rows={4}
+                    className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-white text-sm text-[#1E293B] focus:outline-none focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/10 transition resize-none" />
+                </div>
+                <button type="submit" disabled={loading}
+                  className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#1E3A8A] text-white rounded-xl font-bold text-sm hover:bg-[#F59E0B] transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed">
+                  {loading ? 'Sending...' : '✉️ Send Message →'}
+                </button>
+                <p className="text-center text-xs text-[#94A3B8]">We'll get back to you shortly · Your data is safe</p>
+              </form>
+            )}
           </motion.div>
         </div>
       </div>

@@ -26,15 +26,18 @@ const steps = [
 export default function Admissions() {
   const [formData, setFormData] = useState({ name: '', grade: '', phone: '', email: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ access_key: '74515972-dc29-44f9-8c1a-db992db78467', ...formData }),
+      body: JSON.stringify({ access_key: '74515972-dc29-44f9-8c1a-db992db78467', subject: 'New Admission Enquiry — Fort City School', ...formData }),
     })
+    setLoading(false)
     setSubmitted(true)
   }
 
@@ -136,34 +139,59 @@ export default function Admissions() {
             transition={{ duration: 0.7 }}
             className="lg:col-span-3 bg-white rounded-3xl shadow-lg p-5 sm:p-10 border border-[#E2E8F0] flex flex-col justify-between"
           >
-            <div>
               <p className="text-[#F59E0B] text-xs font-bold uppercase tracking-[0.15em] mb-2">Get Started</p>
               <h3 id="enquiry-form" className="text-2xl font-extrabold text-[#1E293B] mb-3">Admission Enquiry Form</h3>
-              <p className="text-[#475569] text-sm leading-relaxed mb-8">Fill in our Google Form — it takes less than 2 minutes. Your response is saved instantly and our admissions team will contact you within 24 hours.</p>
-              <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                {[
-                  { icon: '👤', label: 'Student Name' },
-                  { icon: '🎓', label: 'Grade Applying For' },
-                  { icon: '📞', label: 'Phone Number' },
-                  { icon: '📧', label: 'Email Address' },
-                  { icon: '💬', label: 'Message' },
-                ].map((f) => (
-                  <div key={f.label} className="flex items-center gap-3 bg-[#F8FAFC] rounded-xl px-4 py-3 border border-[#E2E8F0]">
-                    <span className="text-xl">{f.icon}</span>
-                    <span className="text-sm font-semibold text-[#475569]">{f.label}</span>
+              <p className="text-[#475569] text-sm leading-relaxed mb-6">Fill in the form below — it takes less than 2 minutes. Our admissions team will contact you within 24 hours.</p>
+
+              {submitted ? (
+                <div className="flex flex-col items-center justify-center py-10 gap-3 text-center">
+                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-3xl">✅</div>
+                  <h4 className="text-lg font-extrabold text-[#1E293B]">Enquiry Submitted!</h4>
+                  <p className="text-[#475569] text-sm max-w-xs">Thank you! Our admissions team will reach out to you within 24 hours.</p>
+                  <button onClick={() => { setSubmitted(false); setFormData({ name: '', grade: '', phone: '', email: '', message: '' }) }}
+                    className="mt-2 px-5 py-2 bg-[#1E3A8A] text-white rounded-xl text-sm font-bold hover:bg-[#F59E0B] transition-colors">
+                    Submit Another
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-xs font-bold text-[#475569] uppercase tracking-wide">Student Name *</label>
+                      <input required name="name" value={formData.name} onChange={handleChange} placeholder="Full name"
+                        className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1E293B] focus:outline-none focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/10 transition" />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-xs font-bold text-[#475569] uppercase tracking-wide">Grade Applying For *</label>
+                      <select required name="grade" value={formData.grade} onChange={handleChange}
+                        className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1E293B] focus:outline-none focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/10 transition">
+                        <option value="">Select grade</option>
+                        {['Nursery','LKG','UKG','Class I','Class II','Class III','Class IV','Class V','Class VI','Class VII','Class VIII','Class IX','Class X','Class XI','Class XII'].map(g => <option key={g}>{g}</option>)}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-xs font-bold text-[#475569] uppercase tracking-wide">Phone Number *</label>
+                      <input required name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" type="tel"
+                        className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1E293B] focus:outline-none focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/10 transition" />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-xs font-bold text-[#475569] uppercase tracking-wide">Email Address</label>
+                      <input name="email" value={formData.email} onChange={handleChange} placeholder="your@email.com" type="email"
+                        className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1E293B] focus:outline-none focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/10 transition" />
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-            <a
-              href="https://forms.gle/yqaNeDMQUcmHNHh16"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-4 bg-[#1E3A8A] text-white rounded-xl font-bold text-sm hover:bg-[#F59E0B] transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5"
-            >
-              📋 Open Admission Enquiry Form →
-            </a>
-            <p className="text-center text-xs text-[#94A3B8] mt-3">Opens in a new tab · Powered by Google Forms</p>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-bold text-[#475569] uppercase tracking-wide">Message</label>
+                    <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Any questions or special requirements..." rows={3}
+                      className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1E293B] focus:outline-none focus:border-[#1E3A8A] focus:ring-2 focus:ring-[#1E3A8A]/10 transition resize-none" />
+                  </div>
+                  <button type="submit" disabled={loading}
+                    className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#1E3A8A] text-white rounded-xl font-bold text-sm hover:bg-[#F59E0B] transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed mt-1">
+                    {loading ? 'Sending...' : '📋 Submit Enquiry →'}
+                  </button>
+                  <p className="text-center text-xs text-[#94A3B8]">We respond within 24 hours · Your data is safe</p>
+                </form>
+              )}
           </motion.div>
 
           {/* Info */}

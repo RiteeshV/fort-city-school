@@ -72,17 +72,20 @@ export default function Careers() {
   const [submitted, setSubmitted] = useState(false)
   const [showForm, setShowForm] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
   const handleFile = (e) => setFormData({ ...formData, resume: e.target.files[0] })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ access_key: 'c177abd5-7d1d-45b3-aed1-78908163ce58', ...formData }),
+      body: JSON.stringify({ access_key: 'c177abd5-7d1d-45b3-aed1-78908163ce58', subject: 'New Job Application — Fort City School', ...formData }),
     })
+    setLoading(false)
     setSubmitted(true)
     setShowConfetti(true)
     setTimeout(() => setShowConfetti(false), 2200)
@@ -281,34 +284,59 @@ export default function Careers() {
                         </button>
                       </div>
 
-                      <p className="text-navy-800/60 text-sm leading-relaxed mb-6">Fill in our Google Form to apply. Your application is saved instantly and our team will review it shortly.</p>
-
-                      <div className="grid grid-cols-2 gap-3 mb-6">
-                        {[
-                          { icon: '👤', label: 'Full Name' },
-                          { icon: '📧', label: 'Email' },
-                          { icon: '📱', label: 'Mobile No' },
-                          { icon: '🎓', label: 'Qualification' },
-                          { icon: '💼', label: 'Field Applying For' },
-                          { icon: '⏳', label: 'Work Experience' },
-                          { icon: '✍️', label: 'Why Hire You' },
-                        ].map((f) => (
-                          <div key={f.label} className="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100">
-                            <span className="text-base">{f.icon}</span>
-                            <span className="text-xs font-semibold text-navy-800/70">{f.label}</span>
+                      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-bold text-navy-800/50 uppercase tracking-wide">Title</label>
+                            <select name="title" value={formData.title} onChange={handleChange}
+                              className="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm text-navy-800 focus:outline-none focus:border-navy-800 transition">
+                              {['Mr','Mrs','Ms','Dr'].map(t => <option key={t}>{t}</option>)}
+                            </select>
                           </div>
-                        ))}
-                      </div>
-
-                      <a
-                        href="https://forms.gle/iLizyYvhqfMUNPyf7"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 w-full py-3.5 bg-navy-800 text-white rounded-xl font-bold text-sm hover:bg-gold-500 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5"
-                      >
-                        📋 Open Application Form →
-                      </a>
-                      <p className="text-center text-xs text-navy-800/30 mt-3">Opens in a new tab · Powered by Google Forms</p>
+                          <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-bold text-navy-800/50 uppercase tracking-wide">Full Name *</label>
+                            <input required name="name" value={formData.name} onChange={handleChange} placeholder="Your name"
+                              className="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm text-navy-800 focus:outline-none focus:border-navy-800 transition" />
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-bold text-navy-800/50 uppercase tracking-wide">Email *</label>
+                            <input required type="email" name="email" value={formData.email} onChange={handleChange} placeholder="your@email.com"
+                              className="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm text-navy-800 focus:outline-none focus:border-navy-800 transition" />
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-bold text-navy-800/50 uppercase tracking-wide">Mobile *</label>
+                            <input required type="tel" name="mobile" value={formData.mobile} onChange={handleChange} placeholder="+91 XXXXX XXXXX"
+                              className="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm text-navy-800 focus:outline-none focus:border-navy-800 transition" />
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-bold text-navy-800/50 uppercase tracking-wide">Qualification *</label>
+                            <input required name="qualification" value={formData.qualification} onChange={handleChange} placeholder="e.g. B.Ed, M.Sc"
+                              className="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm text-navy-800 focus:outline-none focus:border-navy-800 transition" />
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-bold text-navy-800/50 uppercase tracking-wide">Role Applying For *</label>
+                            <select required name="field" value={formData.field} onChange={handleChange}
+                              className="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm text-navy-800 focus:outline-none focus:border-navy-800 transition">
+                              <option value="">Select role</option>
+                              {['Subject Teachers','PE Teacher','Computer Science Teacher','Administrative Staff','Lab Assistants'].map(r => <option key={r}>{r}</option>)}
+                            </select>
+                          </div>
+                          <div className="flex flex-col gap-1 col-span-2">
+                            <label className="text-[10px] font-bold text-navy-800/50 uppercase tracking-wide">Work Experience</label>
+                            <input name="experience" value={formData.experience} onChange={handleChange} placeholder="e.g. 3 years at XYZ School"
+                              className="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm text-navy-800 focus:outline-none focus:border-navy-800 transition" />
+                          </div>
+                          <div className="flex flex-col gap-1 col-span-2">
+                            <label className="text-[10px] font-bold text-navy-800/50 uppercase tracking-wide">Why Should We Hire You?</label>
+                            <textarea name="whyHire" value={formData.whyHire} onChange={handleChange} placeholder="Tell us about yourself..." rows={2}
+                              className="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm text-navy-800 focus:outline-none focus:border-navy-800 transition resize-none" />
+                          </div>
+                        </div>
+                        <button type="submit" disabled={loading}
+                          className="flex items-center justify-center gap-2 w-full py-3 bg-navy-800 text-white rounded-xl font-bold text-sm hover:bg-gold-500 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed mt-1">
+                          {loading ? 'Submitting...' : '📋 Submit Application →'}
+                        </button>
+                      </form>
                     </motion.div>
                   )}
                 </AnimatePresence>
